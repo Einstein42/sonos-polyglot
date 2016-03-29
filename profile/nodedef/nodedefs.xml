@@ -1,0 +1,27 @@
+<nodeDefs>
+    <!-- Hub Node -->
+    <nodeDef id="HUB" nls="HHUB">
+        <editors />
+        <sts>
+		    <st id="GV1" editor="MQCONNECTED" /><!-- MyQ Node is Connected -->
+        </sts>
+        <cmds>
+            <sends />
+            <accepts />
+        </cmds>
+    </nodeDef>
+	<!-- MyQ Doors -->
+    <nodeDef id="MQDOOR" nls="MQD">
+        <editors />
+        <sts>
+            <st id="ST" editor="MQSTATUS" />
+        </sts>
+        <cmds>
+            <sends />
+            <accepts>
+                <cmd id="DON" />
+                <cmd id="DOF" />
+            </accepts>
+        </cmds>
+    </nodeDef>
+</nodeDefs>

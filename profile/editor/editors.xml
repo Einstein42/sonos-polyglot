@@ -1,0 +1,8 @@
+<editors>
+    <editor id="MQSTATUS">
+        <range uom="2" subset="0,1" />
+    </editor>
+    <editor id="MQCONNECTED">
+        <range uom="2" subset="0,1" />
+    </editor>
+</editors>

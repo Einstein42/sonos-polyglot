@@ -1,0 +1,18 @@
+{
+    "name": "Sonos",
+    "docs": "https://www.google.com",
+    "type": "python",
+    "executable": "sonos.py",
+    "description": "Add Sonos control to the ISY994.",
+    "notice": "\"Sonos\" is trademarked., see http://www.sonos.com for more information. This Node Server is neither developed by nor endorsed by Sonos.",
+    "credits": [
+        {
+            "title": "sonos: A Python library for Sonos",
+            "author": "James Milne (Einstein.42)",
+            "version": "0.1",
+            "date": "March 28, 2016",
+            "source": "https://github.com/Einstein42/myq-garage",
+            "license": "https://github.com/Einstein42/myq-garage/blob/master/LICENSE"
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+# MQ Labels
+ND-MQHUB-NAME = Chamberlain-MyQ
+ST-HHUB-GV1-NAME = Connected
+
+# Door Status
+ND-MQDOOR-NAME = MyQ Door
+ST-MQD-ST-NAME = State
+CMD-MQD-DON-NAME = Open
+CMD-MQD-DOF-NAME = Close
