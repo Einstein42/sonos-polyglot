@@ -4,8 +4,8 @@
 import requests
 from polyglot.nodeserver_api import SimpleNodeServer, PolyglotConnector, auto_request_report, Node
 
-USERNAME = 'milne.alarm.system@gmail.com'
-PASSWORD = 'smilne11'
+USERNAME = ''
+PASSWORD = ''
 SERVICE = 'https://myqexternal.myqdevice.com'
 
 APPID = 'Vj8pQggXLhLy0WHahglCD4N1nAkkXQtGYpq2HrHD7H1nvmbT55KqtN6RSF4ILB%2fi'
