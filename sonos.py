@@ -24,8 +24,9 @@ def main():
     nserver = SonosNodeServer(poly)
     poly.connect()
     poly.wait_for_config()
-    poly.LOGGER("Sonos Interface version " + VERSION + "created. Initiating setup.")
+    poly.LOGGER.info("Sonos Interface version " + VERSION + " created. Initiating setup.")
     nserver.setup()
+    poly.LOGGER.info("Setup completed. Running Server.")
     nserver.run()
     
 if __name__ == "__main__":
