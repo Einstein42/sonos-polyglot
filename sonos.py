@@ -1,17 +1,15 @@
 #!/usr/bin/python
 """ Sonos Node Server for Polyglot """
 
-import requests
-from polyglot.nodeserver_api import SimpleNodeServer, PolyglotConnector, auto_request_report, Node
+from polyglot.nodeserver_api import SimpleNodeServer, PolyglotConnector
 from sonos_types import SonosSpeaker, SonosControl
-import soco
 
 VERSION = "0.0.1"
 
 
 class SonosNodeServer(SimpleNodeServer):
     """ Sonos Node Server """
-    controller = None
+    speakers = []
 
     def setup(self):
         manifest = self.config.get('manifest',{})
@@ -19,6 +17,12 @@ class SonosNodeServer(SimpleNodeServer):
         self.update_config()
         self.poly.LOGGER.info("FROM Poly ISYVER: " + self.poly.isyver)
         self.long_poll()
+        
+    def poll(self):
+        if self.speakers.count >= 1:
+            for i in self.speakers:
+                i.update_info()
+        return
 
     def long_poll(self):
         """
@@ -32,23 +36,11 @@ class SonosNodeServer(SimpleNodeServer):
                 self.poly.LOGGER.error("KeyError: %s", e)
         """
         return
-
-    def discover(self):
-        manifest = self.config.get('manifest', {})
-        self.poly.LOGGER.info("Received Discover command from ISY")
-        speakers = soco.discover()
-        for speaker in speakers:
-            address = speaker.uid[8:20].lower()
-            lnode = self.get_node(address)
-            if not lnode:
-                SonosSpeaker(self, address, 'Sonos ' + speaker.player_name, self.get_node('sonoscontrol'), manifest)
-        self.update_config()
-        return True
         
 def main():
     """ setup connection, node server, and nodes """
     poly = PolyglotConnector()
-    nserver = SonosNodeServer(poly)
+    nserver = SonosNodeServer(poly, 5, 30)
     poly.connect()
     poly.wait_for_config()
     poly.LOGGER.info("Sonos Interface version " + VERSION + " created. Initiating setup.")
