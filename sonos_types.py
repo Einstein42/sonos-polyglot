@@ -115,8 +115,10 @@ class SonosSpeaker(Node):
                 'GV3': [0, 56, int], 'GV4': [0, 56, int],
                 'ST': [0, 51, int]}
 
-    _commands = {'PLAY': _play,
+    _commands = {'PLAY': _play,       
                             'STOP': _stop,
+                            'DON': _play,
+                            'DOF': _pause,
                             'PAUSE': _pause,
                             'NEXT': _next,
                             'PREVIOUS': _previous,
