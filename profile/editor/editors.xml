@@ -2,4 +2,13 @@
     <editor id="sspkst">
         <range uom="2" subset="0,1" />
     </editor>
+	<editor id="sinc">
+        <range uom="56" min="-10" max="10" step="1" />
+    </editor>
+    <editor id="svolume">
+        <range uom="51" min="0" max="100" prec="0" />
+    </editor>
+    <editor id="splaying">
+        <range uom="25" subset="1-8" nls="PLAYER_ST" />
+    </editor>
 </editors>

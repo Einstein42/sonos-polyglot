@@ -14,13 +14,29 @@
     <nodeDef id="sonosspeaker" nls="sspk">
         <editors />
         <sts>
-            <st id="ST" editor="sspkst" />
+            <st id="ST" editor="svolume" />
+			<st id="GV1" editor="sinc" /> 
+            <st id="GV2" editor="sinc" /> 
         </sts>
         <cmds>
             <sends />
             <accepts>
+                <cmd id="VOLUME">
+                    <p id="" editor="svolume" optional="T" init="ST" />
+                </cmd	>
+                <cmd id="BASS">
+                    <p id="" editor="sinc" optional="T" init="GV1" />
+                </cmd	>
+                <cmd id="TREBLE">
+                    <p id="" editor="sinc" optional="T" init="GV2" />
+				</cmd>
                 <cmd id="PLAY" />
+				<cmd id="PAUSE" />
                 <cmd id="STOP" />
+				<cmd id="PREVIOUS" />
+				<cmd id="NEXT" />
+				<cmd id="MUTE" />
+				<cmd id="PARTYMODE" />
             </accepts>
         </cmds>
     </nodeDef>
