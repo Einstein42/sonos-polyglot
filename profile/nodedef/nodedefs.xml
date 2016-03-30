@@ -1,26 +1,26 @@
 <nodeDefs>
-    <!-- Hub Node -->
-    <nodeDef id="HUB" nls="HHUB">
+    <!-- Sonos Control -->
+    <nodeDef id="sonoscontrol" nls="sctl">
         <editors />
-        <sts>
-		    <st id="GV1" editor="MQCONNECTED" /><!-- MyQ Node is Connected -->
-        </sts>
+        <sts />
         <cmds>
             <sends />
-            <accepts />
+            <accepts>
+			    <cmd id="DISCOVER" />
+		    </accepts>
         </cmds>
     </nodeDef>
-	<!-- MyQ Doors -->
-    <nodeDef id="MQDOOR" nls="MQD">
+	<!-- Sonos Speakers -->
+    <nodeDef id="sonosspeaker" nls="sspk">
         <editors />
         <sts>
-            <st id="ST" editor="MQSTATUS" />
+            <st id="ST" editor="sspkst" />
         </sts>
         <cmds>
             <sends />
             <accepts>
-                <cmd id="DON" />
-                <cmd id="DOF" />
+                <cmd id="PLAY" />
+                <cmd id="STOP" />
             </accepts>
         </cmds>
     </nodeDef>

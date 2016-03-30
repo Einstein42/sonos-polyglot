@@ -1,9 +1,9 @@
-# MQ Labels
-ND-MQHUB-NAME = Chamberlain-MyQ
-ST-HHUB-GV1-NAME = Connected
+# Sonos Controller
+ND-sonoscontrol-NAME = Sonos Controller
+CMD-sctl-DISCOVER-NAME = Discover Speakers
 
-# Door Status
-ND-MQDOOR-NAME = MyQ Door
-ST-MQD-ST-NAME = State
-CMD-MQD-DON-NAME = Open
-CMD-MQD-DOF-NAME = Close
+# Sonos Speakers
+ND-sonosspeaker-NAME = Sonos Speaker
+ST-NAME = Speaker State
+CMD-sspk-PLAY-NAME = Play
+CMD-sspk-STOP-NAME = Stop
