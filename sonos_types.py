@@ -35,9 +35,10 @@ class SonosSpeaker(Node):
         self.zone = soco.SoCo(self.ip)
         self.player_name = player_name
         self.address = address
-        self.parent.poly.LOGGER.info("Adding new Sonos Speaker: " + self.player_name + "@" + self.ip + " Current Volume: " + str(self.zone.volume))
+        self.LOGGER.info("Adding new Sonos Speaker: " + self.player_name + "@" + self.ip + " Current Volume: " + str(self.zone.volume))
         super(SonosSpeaker, self).__init__(parent, address, "Sonos " + player_name, primary, manifest)
-        self._update_node()
+        self.LOGGER.info("Getting current speaker volume, bass and treble...")
+        self.update_info()
         
     def _update_node(self):
         self.parent.poly.LOGGER.info("Updating ISY information with IP address and current volume.")
@@ -47,7 +48,6 @@ class SonosSpeaker(Node):
         self.update_info()
 
     def update_info(self):
-        self.LOGGER.info("Vol: %s Bass: %s Treble: %s", self.zone.volume, self.zone.bass, self.zone.treble)
         self.set_driver('ST', self.zone.volume)
         self.set_driver('GV1', self.zone.bass)
         self.set_driver('GV2', self.zone.treble)
@@ -71,8 +71,8 @@ class SonosSpeaker(Node):
     def _previous(self, **kwargs):
         try:
             self.zone.previous()
-        except Error as e:
-            self.LOGGER.info("Error in command 'previous': %s", e)
+        except:
+            self.LOGGER.info("Error in command 'previous'. This typically means that the station or mode you are in doesn't support it.")
         return True        
 
     def _partymode(self, **kwargs):

@@ -1,45 +1,40 @@
 #!/usr/bin/python
-""" Sonos Node Server for Polyglot """
+""" Sonos Node Server for Polyglot 
+      by Einstein.42(James Milne)
+      milne.james@gmail.com"""
 
 from polyglot.nodeserver_api import SimpleNodeServer, PolyglotConnector
 from sonos_types import SonosSpeaker, SonosControl
 
-VERSION = "0.0.1"
+VERSION = "0.1.1"
 
 
 class SonosNodeServer(SimpleNodeServer):
     """ Sonos Node Server """
+    controller = []
     speakers = []
 
     def setup(self):
         manifest = self.config.get('manifest',{})
-        SonosControl(self,'sonoscontrol','Sonos Control', True, manifest)
-        self.update_config()
+        self.controller = SonosControl(self,'sonoscontrol','Sonos Control', True, manifest)
         self.poly.LOGGER.info("FROM Poly ISYVER: " + self.poly.isyver)
-        self.long_poll()
+        self.controller._discover()
+        self.update_config()
         
     def poll(self):
-        if self.speakers.count >= 1:
+        if len(self.speakers) >= 1:
             for i in self.speakers:
                 i.update_info()
-        return
+        pass
 
     def long_poll(self):
-        """
-        manifest = self.config.get('manifest',{})
-        speakers = soco.discover()
-        for speaker in speakers:
-            try:
-                manifest[speaker.uid[8:22]]['ip_address'] = speaker.ip_address
-                self.poly.LOGGER.info("Manifest: " + str(manifest))
-            except KeyError as e:
-                self.poly.LOGGER.error("KeyError: %s", e)
-        """
-        return
+        # Future stuff
+        pass
         
 def main():
-    """ setup connection, node server, and nodes """
+    # Setup connection, node server, and nodes
     poly = PolyglotConnector()
+    # Override shortpoll and longpoll timers to 5/30, once per second in unnessesary 
     nserver = SonosNodeServer(poly, 5, 30)
     poly.connect()
     poly.wait_for_config()
