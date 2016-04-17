@@ -6,7 +6,7 @@
 from polyglot.nodeserver_api import SimpleNodeServer, PolyglotConnector
 from sonos_types import SonosSpeaker, SonosControl
 
-VERSION = "0.1.1"
+VERSION = "0.2.0"
 
 
 class SonosNodeServer(SimpleNodeServer):
@@ -15,9 +15,10 @@ class SonosNodeServer(SimpleNodeServer):
     speakers = []
 
     def setup(self):
+        super(SimpleNodeServer, self).setup()
         manifest = self.config.get('manifest',{})
         self.controller = SonosControl(self,'sonoscontrol','Sonos Control', True, manifest)
-        self.poly.LOGGER.info("FROM Poly ISYVER: " + self.poly.isyver)
+        self.poly.logger.info("FROM Poly ISYVER: " + self.poly.isyver)
         self.controller._discover()
         self.update_config()
         
@@ -38,9 +39,9 @@ def main():
     nserver = SonosNodeServer(poly, 5, 30)
     poly.connect()
     poly.wait_for_config()
-    poly.LOGGER.info("Sonos Interface version " + VERSION + " created. Initiating setup.")
+    poly.logger.info("Sonos Interface version " + VERSION + " created. Initiating setup.")
     nserver.setup()
-    poly.LOGGER.info("Setup completed. Running Server.")
+    poly.logger.info("Setup completed. Running Server.")
     nserver.run()
     
 if __name__ == "__main__":

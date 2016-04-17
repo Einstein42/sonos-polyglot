@@ -8,14 +8,14 @@ class SonosControl(Node):
     
     def _discover(self, **kwargs):
         manifest = self.parent.config.get('manifest', {})
-        self.parent.poly.LOGGER.info("Received Discover command from ISY.")
+        self.logger.info("Received Discover command from ISY.")
         speakers = soco.discover()
         for speaker in speakers:
             # ISY only allows 14 character limit on nodes, have to strip the RINCON and use the first 14 chars of the UID
             address = speaker.uid[8:22].lower()
             lnode = self.parent.get_node(address)
             if not lnode:
-                self.parent.poly.LOGGER.info("New Speaker Found.")
+                self.logger.info("New Speaker Found.")
                 self.parent.speakers.append(SonosSpeaker(self.parent, self.parent.get_node('sonoscontrol'), address, speaker.player_name,  speaker.ip_address, manifest))
         self.parent.update_config()
         return True        
@@ -30,18 +30,18 @@ class SonosSpeaker(Node):
     
     def __init__(self, parent, primary, address, player_name, ip_address, manifest=None):
         self.parent = parent
-        self.LOGGER = self.parent.poly.LOGGER
+        self.logger = self.parent.poly.logger
         self.ip = ip_address
         self.zone = soco.SoCo(self.ip)
         self.player_name = player_name
         self.address = address
-        self.LOGGER.info("Adding new Sonos Speaker: " + self.player_name + "@" + self.ip + " Current Volume: " + str(self.zone.volume))
+        self.logger.info("Adding new Sonos Speaker: " + self.player_name + "@" + self.ip + " Current Volume: " + str(self.zone.volume))
         super(SonosSpeaker, self).__init__(parent, address, "Sonos " + player_name, primary, manifest)
-        self.LOGGER.info("Getting current speaker volume, bass and treble...")
+        self.logger.info("Getting current speaker volume, bass and treble...")
         self.update_info()
         
     def _update_node(self):
-        self.parent.poly.LOGGER.info("Updating ISY information with IP address and current volume.")
+        self.logger.info("Updating ISY information with IP address and current volume.")
         ip_addr = self.ip.split('.')
         for ind, driver in enumerate(('GV1', 'GV2', 'GV3', 'GV4')):
                 self.set_driver(driver, ip_addr[ind])
@@ -72,7 +72,7 @@ class SonosSpeaker(Node):
         try:
             self.zone.previous()
         except:
-            self.LOGGER.info("Error in command 'previous'. This typically means that the station or mode you are in doesn't support it.")
+            self.logger.info("Error in command 'previous'. This typically means that the station or mode you are in doesn't support it.")
         return True        
 
     def _partymode(self, **kwargs):
