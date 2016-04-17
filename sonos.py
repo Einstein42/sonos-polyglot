@@ -15,6 +15,7 @@ class SonosNodeServer(SimpleNodeServer):
     speakers = []
 
     def setup(self):
+        super(SimpleNodeServer, self).setup()
         manifest = self.config.get('manifest',{})
         self.controller = SonosControl(self,'sonoscontrol','Sonos Control', True, manifest)
         self.poly.logger.info("FROM Poly ISYVER: " + self.poly.isyver)

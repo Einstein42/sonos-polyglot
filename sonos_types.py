@@ -8,14 +8,14 @@ class SonosControl(Node):
     
     def _discover(self, **kwargs):
         manifest = self.parent.config.get('manifest', {})
-        self.parent.poly.logger.info("Received Discover command from ISY.")
+        self.logger.info("Received Discover command from ISY.")
         speakers = soco.discover()
         for speaker in speakers:
             # ISY only allows 14 character limit on nodes, have to strip the RINCON and use the first 14 chars of the UID
             address = speaker.uid[8:22].lower()
             lnode = self.parent.get_node(address)
             if not lnode:
-                self.parent.poly.logger.info("New Speaker Found.")
+                self.logger.info("New Speaker Found.")
                 self.parent.speakers.append(SonosSpeaker(self.parent, self.parent.get_node('sonoscontrol'), address, speaker.player_name,  speaker.ip_address, manifest))
         self.parent.update_config()
         return True        
@@ -41,7 +41,7 @@ class SonosSpeaker(Node):
         self.update_info()
         
     def _update_node(self):
-        self.parent.poly.logger.info("Updating ISY information with IP address and current volume.")
+        self.logger.info("Updating ISY information with IP address and current volume.")
         ip_addr = self.ip.split('.')
         for ind, driver in enumerate(('GV1', 'GV2', 'GV3', 'GV4')):
                 self.set_driver(driver, ip_addr[ind])
