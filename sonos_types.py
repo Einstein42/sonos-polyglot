@@ -1,5 +1,6 @@
 from polyglot.nodeserver_api import Node
 import soco
+import requests
 
 class SonosControl(Node):
     
@@ -10,14 +11,18 @@ class SonosControl(Node):
         manifest = self.parent.config.get('manifest', {})
         self.logger.info("Received Discover command from ISY.")
         speakers = soco.discover()
-        for speaker in speakers:
-            # ISY only allows 14 character limit on nodes, have to strip the RINCON and use the first 14 chars of the UID
-            address = speaker.uid[8:22].lower()
-            lnode = self.parent.get_node(address)
-            if not lnode:
-                self.logger.info("New Speaker Found.")
-                self.parent.speakers.append(SonosSpeaker(self.parent, self.parent.get_node('sonoscontrol'), address, speaker.player_name,  speaker.ip_address, manifest))
-        self.parent.update_config()
+        self.logger.info('Found speakers: %s', speakers)
+        if speakers:
+            for speaker in speakers:
+                # ISY only allows 14 character limit on nodes, have to strip the RINCON and use the first 14 chars of the UID
+                address = speaker.uid[8:22].lower()
+                lnode = self.parent.get_node(address)
+                if not lnode:
+                    self.logger.info("New Speaker Found.")
+                    self.parent.speakers.append(SonosSpeaker(self.parent, self.parent.get_node('sonoscontrol'), address, speaker.player_name,  speaker.ip_address, manifest))
+            self.parent.update_config()
+        else:
+            self.logger.error('No speakers found')
         return True        
 
     _drivers = {}
@@ -48,9 +53,12 @@ class SonosSpeaker(Node):
         self.update_info()
 
     def update_info(self):
-        self.set_driver('ST', self.zone.volume)
-        self.set_driver('GV1', self.zone.bass)
-        self.set_driver('GV2', self.zone.treble)
+        try:
+            self.set_driver('ST', self.zone.volume)
+            self.set_driver('GV1', self.zone.bass)
+            self.set_driver('GV2', self.zone.treble)
+        except requests.exceptions.ConnectionError as e:
+            self.logger.error('Connection error to ISY: %s', e)
 
     def _play(self, **kwargs):
         self.zone.play()
