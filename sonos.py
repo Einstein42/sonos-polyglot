@@ -6,7 +6,7 @@
 from polyglot.nodeserver_api import SimpleNodeServer, PolyglotConnector
 from sonos_types import SonosSpeaker, SonosControl
 
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 
 
 class SonosNodeServer(SimpleNodeServer):
@@ -31,6 +31,11 @@ class SonosNodeServer(SimpleNodeServer):
     def long_poll(self):
         # Future stuff
         pass
+
+    def report_drivers(self):
+        if len(self.speakers) >= 1:
+            for i in self.speakers:
+                i.report_driver()
         
 def main():
     # Setup connection, node server, and nodes

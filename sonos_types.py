@@ -23,7 +23,11 @@ class SonosControl(Node):
             self.parent.update_config()
         else:
             self.logger.error('No speakers found')
-        return True        
+        return True      
+
+    def query(self, **kwargs):
+        self.parent.report_drivers()
+        return True
 
     _drivers = {}
 
@@ -59,6 +63,11 @@ class SonosSpeaker(Node):
             self.set_driver('GV2', self.zone.treble)
         except requests.exceptions.ConnectionError as e:
             self.logger.error('Connection error to ISY: %s', e)
+
+    def query(self, **kwargs):
+        self.update_info()
+        self.report_driver()
+        return True
 
     def _play(self, **kwargs):
         self.zone.play()

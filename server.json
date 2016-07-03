@@ -9,8 +9,8 @@
         {
             "title": "sonos: A Python library for Sonos",
             "author": "James Milne (Einstein.42)",
-            "version": "0.2",
-            "date": "April 17, 2016",
+            "version": "0.2.1",
+            "date": "July 2nd, 2016",
             "source": "https://github.com/Einstein42/myq-garage",
             "license": "https://github.com/Einstein42/myq-garage/blob/master/LICENSE"
         }
