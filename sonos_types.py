@@ -126,6 +126,7 @@ class SonosSpeaker(Node):
 
     def query(self, **kwargs):
         self.update_info()
+        self.report_driver()
         return True
 
     _drivers = {'GV1': [0, 56, int], 'GV2': [0, 56, int],
